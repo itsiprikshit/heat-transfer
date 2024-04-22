@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "type": "closed",
+        "toLoad": false,
         "Ac": 4,
         "FU": 3,
         "FTA": 0.7,
@@ -17,7 +17,7 @@
     },
     {
         "id": 2,
-        "type": "open",
+        "toLoad": true,
         "Ac": 4,
         "FU": 3,
         "FTA": 0.7,
@@ -33,7 +33,7 @@
     },
     {
         "id": 3,
-        "type": "closed",
+        "toLoad": false,
         "Ac": 6,
         "FU": 3,
         "FTA": 0.7,

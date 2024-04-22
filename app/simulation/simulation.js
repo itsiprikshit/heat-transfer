@@ -68,17 +68,18 @@ const tankTemperatureOpenUsingHotWater = (Thot, Tprev, Tw, rho, Vt, delta_t, m) 
     return Tcurr;
 };
 
-const tankTemperatureUsingIrradiance = ({ type, Irr, Twater, Tair, Tprev, Ac, FU, FTA, m, Cw, rho, Vt, dt, Pl, Pr }) => {
+const tankTemperatureUsingIrradiance = ({ toLoad, Irr, Twater, Tair, Tprev, Ac, FU, FTA, m, Cw, rho, Vt, dt, Pl, Pr }) => {
     let Tcurr;
 
     for (let i = 0; i < dt; i++) {
         let Q = usefulHeatFromCollector(Irr, Tair, Tprev, Ac, FU, FTA);
         let Thot = outputTemperatureFromCollector(Q, Ac, Tprev, m, Cw, Pl, Pr);
 
-        if (type == "closed") {
+        if (!toLoad) {
             Tcurr = tankTemperatureClosedUsingHotWater(Thot, Tprev, rho, Vt, 1, m);
         }
-        if (type == "open") {
+
+        if (toLoad) {
             Tcurr = tankTemperatureOpenUsingHotWater(Thot, Tprev, Twater, rho, Vt, 1, m);
         }
 

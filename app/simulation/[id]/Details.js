@@ -1,4 +1,4 @@
-import { Accordion, Label, TextInput, Select, Button } from "flowbite-react";
+import { Accordion, Label, TextInput, Select, Button, ToggleSwitch } from "flowbite-react";
 import moment from "moment";
 
 import "./main.css";
@@ -24,22 +24,18 @@ export default function Details({ isSimulate, handleSimulate, handleReset, simIn
                     <Button onClick={handleReset} gradientMonochrome="purple">
                         Reset
                     </Button>
+                    <label htmlFor="toLoad" className="inline-flex items-center me-5 cursor-pointer">
+                        <input id="toLoad" type="checkbox" value="" className="sr-only peer" checked={!!simInfo.toLoad} onChange={(e) => handleChange("toLoad", e.target.checked)} />
+                        <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-orange-300 dark:peer-focus:ring-orange-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-500"></div>
+                        <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">To Load</span>
+                    </label>
                 </div>
             </div>
             <Accordion collapseAll className="no-round no-border">
                 <Accordion.Panel>
                     <Accordion.Title className="no-round">Simulation parameters</Accordion.Title>
                     <Accordion.Content>
-                        <div className="grid gap-4 xl:grid-cols-5">
-                            <div>
-                                <div className="block">
-                                    <Label htmlFor="type" value="Type" />
-                                </div>
-                                <Select id="type" required onChange={(e) => handleChange("type", e.target.value)} value={simInfo.type} disabled={isDisabled} readOnly={isDisabled}>
-                                    <option value="closed">Closed</option>
-                                    <option value="open">Open</option>
-                                </Select>
-                            </div>
+                        <div className="grid gap-4 xl:grid-cols-4">
                             <div>
                                 <Label htmlFor="Ac">Collector area</Label>
                                 <TextInput

@@ -180,6 +180,7 @@ export default function Simview({ isSimulate, simParams }) {
                          * We assume that the data[index].ghi and data[index].temperature are the average
                          * solar irradiance and air temperature in the last 10 minutes
                          */
+
                         let tankTemperature = tankTemperatureUsingIrradiance(sim);
 
                         val.tankTemperature = tankTemperature;

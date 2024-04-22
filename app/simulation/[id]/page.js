@@ -17,7 +17,7 @@ export default function Home({ params }) {
 
     const [simInfo, setSimInfo] = useState({
         id: parseInt(params.id),
-        type: "closed",
+        toLoad: false,
         Ac: "",
         FU: "",
         FTA: "",
@@ -55,7 +55,7 @@ export default function Home({ params }) {
     const handleChange = (key, value) => {
         setSimInfo((s) => {
             let v = value;
-            if (key != "type" && v.length) {
+            if (key != "toLoad" && v.length) {
                 v = parseFloat(v);
             }
 
@@ -71,7 +71,7 @@ export default function Home({ params }) {
             let brk = false;
 
             for (let k in obj) {
-                if (k != "type") {
+                if (k != "toLoad") {
                     if (obj[k] === "") {
                         setCanRun(false);
                         brk = true;
