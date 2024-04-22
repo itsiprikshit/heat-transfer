@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import dataset from "../../data/dataset.json";
 
-import tankTemperatureUsingIrradiance from "../simulation";
+import heatTransfer from "../simulation";
 
 import dynamic from "next/dynamic";
 
@@ -181,7 +181,7 @@ export default function Simview({ isSimulate, simParams }) {
                          * solar irradiance and air temperature in the last 10 minutes
                          */
 
-                        let tankTemperature = tankTemperatureUsingIrradiance(sim);
+                        let tankTemperature = heatTransfer(sim);
 
                         val.tankTemperature = tankTemperature;
 

@@ -35,7 +35,7 @@ const outputTemperatureFromCollector = (Q, Ac, Tprev, m, Cw, Pl, Pr) => {
     return Thot;
 };
 
-const tankTemperatureClosedUsingHotWater = (Thot, Tprev, rho, Vt, delta_t, m) => {
+const udpateDTankTemperature = (toLoad, Thot, Tprev, Tw, rho, Vt, delta_t, m) => {
     /**
      * Using energy balance equation
      * U =  Q + W + (hin - hout)
@@ -47,41 +47,25 @@ const tankTemperatureClosedUsingHotWater = (Thot, Tprev, rho, Vt, delta_t, m) =>
      * The only way heat enters and leaves is through the enthalpy of water entering and leaving the tank
      */
 
-    let Tcurr = (delta_t * m * Thot + Tprev * rho * Vt) / (rho * Vt + delta_t * m);
+    let Tcurr = 0;
+
+    if (toLoad) {
+        Tcurr = (delta_t * m * Thot + Tprev * rho * Vt + delta_t * m * Tw) / (rho * Vt + 2 * delta_t * m);
+    } else {
+        Tcurr = (delta_t * m * Thot + Tprev * rho * Vt) / (rho * Vt + delta_t * m);
+    }
 
     return Tcurr;
 };
 
-const tankTemperatureOpenUsingHotWater = (Thot, Tprev, Tw, rho, Vt, delta_t, m) => {
-    /**
-     * Using energy balance equation
-     * U =  Q + W + (hin - hout)
-     * Assuming there is no heat loss, no extra heat is supplied to the tank and there is no work
-     * Q = 0
-     * W = 0
-     *
-     * The only way heat enters and leaves is through the enthalpy of water entering and leaving the tank
-     */
-
-    let Tcurr = (delta_t * m * Thot + delta_t * m * Tw + Tprev * rho * Vt) / (rho * Vt + 2 * delta_t * m);
-
-    return Tcurr;
-};
-
-const tankTemperatureUsingIrradiance = ({ toLoad, Irr, Twater, Tair, Tprev, Ac, FU, FTA, m, Cw, rho, Vt, dt, Pl, Pr }) => {
+const heatTransfer = ({ toLoad, Irr, Twater, Tair, Tprev, Ac, FU, FTA, m, Cw, rho, Vt, dt, Pl, Pr }) => {
     let Tcurr;
 
     for (let i = 0; i < dt; i++) {
         let Q = usefulHeatFromCollector(Irr, Tair, Tprev, Ac, FU, FTA);
         let Thot = outputTemperatureFromCollector(Q, Ac, Tprev, m, Cw, Pl, Pr);
 
-        if (!toLoad) {
-            Tcurr = tankTemperatureClosedUsingHotWater(Thot, Tprev, rho, Vt, 1, m);
-        }
-
-        if (toLoad) {
-            Tcurr = tankTemperatureOpenUsingHotWater(Thot, Tprev, Twater, rho, Vt, 1, m);
-        }
+        Tcurr = udpateDTankTemperature(toLoad, Thot, Tprev, Twater, rho, Vt, 1, m);
 
         Tprev = Tcurr;
     }
@@ -89,4 +73,4 @@ const tankTemperatureUsingIrradiance = ({ toLoad, Irr, Twater, Tair, Tprev, Ac, 
     return Tcurr;
 };
 
-export default tankTemperatureUsingIrradiance;
+export default heatTransfer;
