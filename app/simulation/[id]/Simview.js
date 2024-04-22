@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-import LineChart from "@/app/components/Charts";
-
 import dataset from "../../data/dataset.json";
 
 import tankTemperatureUsingIrradiance from "../simulation";
+
+import dynamic from "next/dynamic";
+
+const LineChart = dynamic(() => import("@/app/components/Charts"), { ssr: false });
 
 let _CHART_DATA_ = dataset.map((data) => {
     data.timestamp = +new Date(data.year, data.month, data.day, data.hour, data.minute);
@@ -209,11 +211,11 @@ export default function Simview({ isSimulate, simParams }) {
 
     return (
         <div className="mt-6 grid gap-4 xl:grid-cols-2">
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm xl:col-span-1 sm:p-6">
+            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm xl:col-span-1 sm:p-6" style={{ minHeight: "500px" }}>
                 <span className="text-xl">Solar Irradiance</span>
                 <LineChart {...solar}></LineChart>
             </div>
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm xl:col-span-1 sm:p-6">
+            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm xl:col-span-1 sm:p-6" style={{ minHeight: "500px" }}>
                 <span className="text-xl">Temperature</span>
                 <LineChart {...temperature}></LineChart>
             </div>
