@@ -137,7 +137,7 @@ const formatTemperatureChart = (data) => {
     let max = Math.max(...airTemperature, ...tankTemperature);
     let min = Math.min(...airTemperature, ...tankTemperature);
 
-    if (temperature.yaxis.max < max + 5) {
+    if (temperature.yaxis.max < max + 5 || temperature.yaxis.max > max + 5) {
         temperature.yaxis.max = max + 5;
     }
 
