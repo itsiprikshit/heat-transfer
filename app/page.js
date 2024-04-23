@@ -4,29 +4,39 @@ import { useState } from "react";
 import Nav from "./components/Nav";
 import Dashboard from "./components/Dashboard";
 
+/**
+ * simulations.json contains an array of pre-created simulation parameters
+ */
 import SIMULATIONS from "./data/simulations.json";
 
+/**
+ * Home page component
+ *
+ * @returns {ReactNode} - A react element that renders the home page
+ */
 export default function Home() {
-    const [sims, setSims] = useState(SIMULATIONS);
+    /**
+     * Set all simulations in state
+     * Only setting the simulation id
+     */
+    const [sims, setSims] = useState(
+        SIMULATIONS.map((s) => {
+            return {
+                id: s.id
+            };
+        })
+    );
+
+    /**
+     * Function to handle + Create Simulation click by creating a
+     * dummy simulation object and adding it to the existing simulations
+     */
     const handleClick = () => {
         setSims((s) => {
             return [
                 ...s,
                 {
-                    id: s.length + 1,
-                    type: "closed",
-                    Ac: "",
-                    FU: "",
-                    FTA: "",
-                    Pl: "",
-                    Pr: "",
-                    Twater: "",
-                    m: "",
-                    Vt: "",
-                    Tprev: "",
-                    Cw: 4182,
-                    rho: 995,
-                    dt: 10
+                    id: s.length + 1
                 }
             ];
         });

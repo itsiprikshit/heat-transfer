@@ -2,19 +2,30 @@
 
 import { useState, useEffect } from "react";
 
-import dataset from "../../data/dataset.json";
+import DATASET from "../../data/dataset.json";
 
-import heatTransfer from "../simulation";
+import { heatTransfer } from "../simulation";
 
 import dynamic from "next/dynamic";
 
 const LineChart = dynamic(() => import("@/app/components/Charts"), { ssr: false });
 
-let _CHART_DATA_ = dataset.map((data) => {
+/**
+ * dataset.json contains data for Solar Irradiance and
+ * Air Temperature on 06/01/2024
+ */
+
+let _CHART_DATA_ = DATASET.map((data) => {
     data.timestamp = +new Date(data.year, data.month, data.day, data.hour, data.minute);
     return data;
 });
 
+/**
+ * Format solar chart data
+ *
+ * @param {Array} data - Chart data
+ * @returns {Object} - Solar line chart settings
+ */
 const formatSolarChart = (data) => {
     let index = data.length;
     let xaxis = _CHART_DATA_.map((d) => d.timestamp);
@@ -66,6 +77,12 @@ const formatSolarChart = (data) => {
     return solar;
 };
 
+/**
+ * Format temperature chart data
+ *
+ * @param {Array} data - Chart data
+ * @returns {Object} - Temperature line chart settings
+ */
 const formatTemperatureChart = (data) => {
     let index = data.length;
     let xaxis = _CHART_DATA_.map((d) => d.timestamp);
@@ -130,10 +147,42 @@ const formatTemperatureChart = (data) => {
     return temperature;
 };
 
+/**
+ * Simulation view component
+ * This component runs the simulation for the provided simulation parameters
+ * using the dataset values from 06/01/2024
+ *
+ * @param {Object} props
+ * @param {Boolean} props.isSimulate - Simulation status
+ * @param {Object} props.simParams - Simulation parameters
+ * @returns {ReactNode} - A react element that renders the simulation view
+ */
 export default function Simview({ isSimulate, simParams }) {
+    /**
+     * Set the chart data and interval
+     * Chart data structure -
+     * [
+     *      {
+     *          ghi: 1000,
+     *          temperature: 20,
+     *          tankTemperature: 0
+     *      }
+     * ]
+     *
+     * The fields are described in simulation.js
+     */
     let [chartData, setChartData] = useState([]);
     let [_, setTheInterval] = useState(null);
 
+    /**
+     * This effect is called when isSimulate or simParams changes
+     *
+     * When isSimulate is true, we setInterval that runs every 100ms
+     * and calculates the tank temperature real time and updates chartData
+     *
+     * The interval is cleared when isSimulate is set to false by the
+     * previous component unmount or when the simulation is complete
+     */
     useEffect(() => {
         let sim = JSON.parse(JSON.stringify(simParams));
 
@@ -145,7 +194,8 @@ export default function Simview({ isSimulate, simParams }) {
 
                         if (index >= _CHART_DATA_.length) {
                             /**
-                             * It is very important to clear the interval here otherwise it will keep on going
+                             * It is very important to clear the interval here when entire data has been plotted,
+                             * otherwise the interval will keep on running
                              */
                             setTheInterval((interval) => {
                                 clearInterval(interval);
@@ -158,31 +208,38 @@ export default function Simview({ isSimulate, simParams }) {
                         let val = {
                             ghi: _CHART_DATA_[index].ghi,
                             temperature: _CHART_DATA_[index].temperature,
-                            tankTemperature: sim.Tprev
+                            tankTemperature: sim.Tmains
                         };
 
                         if (!index) {
                             /**
                              * Initialising the base state
+                             * In the base state, tankTemperature equals Tmains
                              */
                             return [val];
                         }
 
-                        // Properties that change over time
+                        /**
+                         * Setting dynamic parameters for the simulation
+                         *
+                         * The library will simulate how the temperature changed in the last sim.ts seconds
+                         * and will return the current temperature at _CHART_DATA_[index].timestamp value
+                         *
+                         * We assume that the data[index].ghi and data[index].temperature are the average
+                         * solar irradiance and air temperature in the last sim.ts seconds
+                         *
+                         * Tprev is the temperature sim.ts seconds ago
+                         */
+
                         sim.Irr = val.ghi;
                         sim.Tair = val.temperature;
                         sim.Tprev = data[index - 1].tankTemperature;
 
-                        /**
-                         * The library will simulate how the temperature changed in the last 10 minutes
-                         * and will return the current temperature
-                         *
-                         * We assume that the data[index].ghi and data[index].temperature are the average
-                         * solar irradiance and air temperature in the last 10 minutes
-                         */
-
                         let tankTemperature = heatTransfer(sim);
 
+                        /**
+                         * Update the tankTemperature
+                         */
                         val.tankTemperature = tankTemperature;
 
                         return [...data, val];
@@ -207,6 +264,9 @@ export default function Simview({ isSimulate, simParams }) {
         };
     }, [isSimulate, simParams]);
 
+    /**
+     * Format data for Solar irradiance and temperature chart
+     */
     let solar = formatSolarChart(chartData);
     let temperature = formatTemperatureChart(chartData);
 

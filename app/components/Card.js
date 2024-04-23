@@ -8,7 +8,7 @@ export default function Card({ id }) {
             <div className="flex items-center justify-between mb-4">
                 <div className="flex-shrink-0">
                     <span className="text-xl font-bold leading-none text-gray-900 dark:text-white">My sim #{id}</span>
-                    <h3 className="text-base font-light text-gray-500 dark:text-gray-400">{moment().format("MMM Do, YYYY")}</h3>
+                    <h3 className="text-base font-light text-gray-500 dark:text-gray-400">{moment.utc().format("MMM Do, YYYY")}</h3>
                 </div>
             </div>
             <div id="main-chart"></div>
