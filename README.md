@@ -2,6 +2,8 @@
 
 This application simulates heat transfer from a solar collector to a storage tank. This solar water heater is an <b>Open loop Active circulation</b> system meaning it heats the water which is circulated from tank to the collector using a pump.
 
+![alt system](public/images/system.PNG)
+
 ## Getting Started
 
 First, clone the repository and then run the following commands:
@@ -24,7 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Dataset
 
-The dataset used in the application is collected for Salt Lake City from [National Solar Radiation Database](https://nsrdb.nrel.gov/). The dataset is located at `app/data/dataset.json`.
+The dataset used in the application is collected for Salt Lake City from [National Solar Radiation Database](https://nsrdb.nrel.gov/). The dataset is located at [`app/data/dataset.json`](app/data/dataset.json).
 
 Data structure and description -
 
@@ -48,14 +50,18 @@ Data structure and description -
 
 The data points are at a constant time step value of 10 minutes. It is assumed that the all the values are <b>averaged over last 10 minutes</b>.
 
-> If you wish to simulate the system against dataset for any other date, just replace the `dataset.json` with your data. Just make sure, the data is formatted according to the above structure.<br>
+> If you wish to simulate the system against dataset for any other date, just replace the [`dataset.json`](app/data/dataset.json) with your data. Just make sure, the data is formatted according to the above structure.<br>
 > Current dataset is for `06/01/2022`.
 
 ## Simulation
 
-The application comes with existing simulations which are saved in `app/data/simulations.json`. You are also allowed to create simulations of your own but they <b>won't be saved</b>. If you wish to save your simulations, I would suggest adding the simulation parameters to the `simulations.json`.
+The application comes with existing simulations which are saved in [`app/data/simulations.json`](app/data/simulations.json). You are also allowed to create simulations of your own but they <b>won't be saved</b>. If you wish to save your simulations, I would suggest adding the simulation parameters to the `simulations.json`.
 
-Simulation parameters and description -
+The simulation library is located at [`app/simulation/simulation.js`](app/simulation/simulation.js). This file contains the main logic for calculating heat transfer from solar collector to the storage tank.
+
+Use the [`heatTransfer`](https://github.com/itsiprikshit/heat-transfer/blob/1c3240f52266048c9e7eb9d609c659d3965f6206/app/simulation/simulation.js#L116) method to simulate the heat transfer.
+
+Simulation parameters and their description -
 
 ```
 {
@@ -96,6 +102,22 @@ Since the existing dataset has data points 10 minutes, therefore, the default va
 > You can also toggle the value of `toload` during the run which essentially sets whether the water is being used or not.
 
 Naturally, when `toload` is false the temperature of tank water will be more than otherwise because the hot water does not leave the tank.
+
+## Thermodynamics
+
+Please checkout the images attached below to know more about the heat transfer logic.
+
+![alt heat-transfer-1](./public/images/ht1.JPG)
+![alt heat-transfer-2](./public/images/ht2.JPG)
+![alt heat-transfer-3](./public/images/ht3.JPG)
+
+> Some Assumptions -<br>
+>
+> -   The storage tank is fully insulated therefore, there is no heat loss from the tank to the surroundings<br>
+> -   The tank is <b>unstratified storage tank</b> i.e. the contents of the tank are relatively uniform in temperature and composition throughout,
+> -   No extra heat is applied to the tank<br>
+> -   No work is being done on the tank<br>
+> -   The external pipes are also insulated therefore, no heat loss
 
 ## Result
 
