@@ -20,6 +20,8 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+> I developed this application with `node v20.12.0`. Incase, you are not able to start the development server or build the application, maybe install the said node version. Thanks :)
+
 ## Dataset
 
 The dataset used in the application is collected for Salt Lake City from [National Solar Radiation Database](https://nsrdb.nrel.gov/). The dataset is located at `app/data/dataset.json`.
