@@ -13,6 +13,7 @@ const LineChart = dynamic(() => import("@/app/components/Charts"), { ssr: false 
 /**
  * dataset.json contains data for Solar Irradiance and
  * Air Temperature on 06/01/2024
+ * The data is described in the README.md
  */
 
 let _CHART_DATA_ = DATASET.map((data) => {
@@ -169,7 +170,7 @@ export default function Simview({ isSimulate, simParams }) {
      *      }
      * ]
      *
-     * The fields are described in simulation.js
+     * ghi is the solar irradiance
      */
     let [chartData, setChartData] = useState([]);
     let [_, setTheInterval] = useState(null);

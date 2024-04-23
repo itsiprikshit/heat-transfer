@@ -97,12 +97,12 @@ const newTankTemperature = (toLoad, Thot, Tprev, Tmains, rho, Vt, delta_t, m) =>
  * Simulate heat transfer
  *
  * @param {Object} props
- * @param {Boolean} props.toLoad - Set to true if the water is being supplied to households
+ * @param {Boolean} props.toLoad - Set to true if the water is being supplied to households (Boolean)
  * @param {Number} props.Irr - Solar irradiance (W/m^2)
  * @param {Number} props.Tmains - Temperature of cold water entering the tank through the main supply (Celcius)
  * @param {Number} props.Tair - Air temperature (Celcius)
  * @param {Number} props.Ac - Area of collector (m^2)
- * @param {Number} props.FU - Product of collector heat removal factor and Overall collector heat loss coefficient (W/m^2 C)
+ * @param {Number} props.FU - Product of collector heat removal factor and overall collector heat loss coefficient (W/m^2 C)
  * @param {Number} props.FTA - Product of collector heat removal factor, transmittance and absorbance of collector (Constant)
  * @param {Number} props.m - Mass flow rate of water (kg/s m^2)
  * @param {Number} props.Cw - Specific heat capacity of water (J/kg C)
