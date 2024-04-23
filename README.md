@@ -22,6 +22,8 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+![alt heat-transfer.git](public/images/heat-transfer.gif)
+
 > I developed this application with `node v20.12.0`. Incase, you are not able to start the development server or build the application, maybe install the said node version. Thanks :)
 
 ## Dataset
