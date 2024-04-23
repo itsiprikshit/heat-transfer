@@ -135,3 +135,15 @@ Based on the simulation I made following observations -
 -   When the solar irradiance increases, the temperature within the tank may or may not increase. It depends on the following factors:
     -   If the tank water is not going out to load and is only circulating within the tank and the collector, the temperature of tank water increases somewhat proportionally to solar irradiance
     -   However, if the water is being used at load, the temperature of tank water does not increase that much because there is a constant supply of cold water from the mains
+
+## References
+
+This is the list of references I used to develop this simulation -
+
+-   Solar Engineering
+    of Thermal Processes,
+    Photovoltaics and Wind - Fifth Edition
+-   Fluid Mechanics: Fundamentals and Applications
+-   https://sam.nrel.gov/images/web_page_files/christensen-2014-simplified-swh-simulation-multi-mode-tank.pdf
+-   https://sam.nrel.gov/images/web_page_files/diorio-2014-draft-swh-sam-technical-manual.pdf
+-   https://www.youtube.com/playlist?list=PLliuty-DnCedN7O8a7n6hl0O7Wc1XqTt5
