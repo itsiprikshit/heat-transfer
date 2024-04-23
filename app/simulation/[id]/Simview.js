@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Toast } from "flowbite-react";
+import { HiCheck } from "react-icons/hi";
 
 import DATASET from "../../data/dataset.json";
 
@@ -281,6 +283,15 @@ export default function Simview({ isSimulate, simParams }) {
                 <span className="text-xl">Temperature</span>
                 <LineChart {...temperature}></LineChart>
             </div>
+            {chartData.length == _CHART_DATA_.length && (
+                <Toast className="fixed right-5 bottom-5">
+                    <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                        <HiCheck className="h-5 w-5" />
+                    </div>
+                    <div className="ml-3 text-sm font-normal">Simulation completed!</div>
+                    <Toast.Toggle />
+                </Toast>
+            )}
         </div>
     );
 }
