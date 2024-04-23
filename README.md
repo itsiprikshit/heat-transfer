@@ -95,4 +95,15 @@ Since the existing dataset has data points 10 minutes, therefore, the default va
 > After you have finalized all the simulation parameters, you can `Run`, `Pause` and `Reset` the simulation.<br>
 > You can also toggle the value of `toload` during the run which essentially sets whether the water is being used or not.
 
-Naturally, when `toload` is false the temperature of water inside the tank will be more than otherwise.
+Naturally, when `toload` is false the temperature of tank water will be more than otherwise because the hot water does not leave the tank.
+
+## Result
+
+Based on the simulation I made following observations -
+
+-   When the solar irradiance is 0 (happens during night), the temperature of tank water may or may not increase. It depends on the following factors:
+    -   If `Tair > Twater`, the temperature of tank water increases because heat is transferred from air to the water
+    -   However, if the `Tair < Twater`, heat is transferred from water to the surrounding air at collector, thus decreasing the temperature of tank water
+-   When the solar irradiance increases, the temperature within the tank may or may not increase. It depends on the following factors:
+    -   If the tank water is not going out to load and is only circulating within the tank and the collector, the temperature of tank water increases somewhat proportionally to solar irradiance
+    -   However, if the water is being used at load, the temperature of tank water does not increase that much because there is a constant supply of cold water from the mains
