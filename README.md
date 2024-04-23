@@ -103,6 +103,10 @@ Since the existing dataset has data points 10 minutes, therefore, the default va
 
 Naturally, when `toload` is false the temperature of tank water will be more than otherwise because the hot water does not leave the tank.
 
+Other than the javascript implementation, I have also included the python implementation of the code of the heat transfer.
+You can find it at [`python/`](./python/).<br> The folder contains a [`python notebook`](python/mysolar.ipynb) file and a [`python script`](python/mysolar.py).
+Please note that the python code was implemented in Google colab. Therefore, I would recommend running the code in Google colab for avoid any hassles.
+
 ## Thermodynamics
 
 Please checkout the images attached below to know more about the heat transfer logic.
