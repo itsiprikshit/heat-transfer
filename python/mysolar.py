@@ -40,6 +40,8 @@ for i, ax in enumerate(fig.axes):
   ax.set_xlabel(PLOTS[i]['xlabel'])
   ax.set_ylabel(PLOTS[i]['ylabel'])
 
+fig.savefig('irr_air.png')
+
 f = open("dataset.json", "w")
 f.write(plotdf.to_json(orient="records"))
 
@@ -114,7 +116,7 @@ rho = 995 # Density of water (kg/m^3)
 
 Vt = .1 # Volume of tank in m^3 or 300L
 
-def simulation(toLoad):
+def simulation(toLoad, img):
   Tin = Twater # Input Water temperature at the collector coming from the tank
 
   Tarr = []
@@ -157,15 +159,16 @@ def simulation(toLoad):
 
     index += 1
 
+  plt.figure()
   plt.plot(data['timestamp'], data['temperature'], label = 'Ambient Temperature')
   plt.plot(data['timestamp'], Tarr, label = 'Water temperature')
   plt.gca().xaxis.set_major_formatter(DateFormatter("%H:%M"))
-  plt.title(f'Change in tank water temperature and ambient tempearture on 06/01/2022 when toLoad = {toLoad}')
+  plt.title(f'Change in tank water temperature and ambient tempearture \n on 06/01/2022 when toLoad = {toLoad}')
   plt.xlabel('Time (hour : minute)')
   plt.ylabel('Temperature (Celcius)')
   plt.legend()
-  plt.show()
+  plt.savefig(img)
 
-simulation(False)
+simulation(False, 'img1.png')
 
-simulation(True)
+simulation(True, 'img2.png')
