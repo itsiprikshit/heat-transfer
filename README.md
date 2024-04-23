@@ -2,9 +2,27 @@
 
 This application simulates heat transfer from a solar collector to a storage tank. This solar water heater is an <b>Open loop Active circulation</b> system meaning it heats the water which is circulated from tank to the collector using a pump.
 
+## Getting Started
+
+First, clone the repository and then run the following commands:
+
+```bash
+cd heat-transfer
+npm install
+
+# Run the development server
+npm run dev
+# or
+# Run the build
+npm run build
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ## Dataset
 
-The dataset used in the application is collected for Salt Lake City from [National Solar Radiation Database](https://nsrdb.nrel.gov/).
+The dataset used in the application is collected for Salt Lake City from [National Solar Radiation Database](https://nsrdb.nrel.gov/). The dataset is located at `app/data/dataset.json`.
 
 Data structure and description -
 
@@ -27,6 +45,9 @@ Data structure and description -
 `dni` : Modeled solar radiation obtained from the direction of the sun
 
 The data points are at a constant time step value of 10 minutes. It is assumed that the all the values are <b>averaged over last 10 minutes</b>.
+
+> If you wish to simulate the system against dataset for any other date, just replace the `dataset.json` with your data. Just make sure, the data is formatted according to the above structure.<br>
+> Current dataset is for `06/01/2022`.
 
 ## Simulation
 
@@ -70,24 +91,6 @@ Simulation parameters and description -
 Since the existing dataset has data points 10 minutes, therefore, the default value of `ts` should be `600 seconds`.
 
 > After you have finalized all the simulation parameters, you can `Run`, `Pause` and `Reset` the simulation.<br>
-> You can also toggle the value of `toload` during the run which essentially means if the water is being used or not.
+> You can also toggle the value of `toload` during the run which essentially sets whether the water is being used or not.
 
 Naturally, when `toload` is false the temperature of water inside the tank will be more than otherwise.
-
-## Getting Started
-
-First, clone the repository and then run the following commands:
-
-```bash
-cd heat-transfer
-npm install
-
-# Run the development server
-npm run dev
-# or
-# Run the build
-npm run build
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

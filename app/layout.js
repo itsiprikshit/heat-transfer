@@ -6,7 +6,7 @@ import "./globals.css";
 const lato = Lato({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
-    title: "Solar water heater!",
+    title: "Heat transfer!",
     description: "A simulation for a solar water heater."
 };
 
